@@ -6,38 +6,55 @@ function init() {
     //Stage - это контейнер для всех DisplayObject
     var stage = new createjs.Stage(canvas);
 
-    var envi  = new createjs.Shape();
+//    var envi  = new createjs.Shape();
+    var blockX = 50;
+    var blockY = 50;
+    var map = ["................", // 16:8
+               "................",
+               ".........##.....",
+               ".##............",
+               "......#.....#...",
+               ".........#......",
+               "...#....##......",
+               "######........##"];
+    var block = new createjs.Shape();
 
-    // envi.graphics
-    //     .beginFill('#000')
-    //     .beginStroke("#000")
-    //     .rect(0,  620, 250, 80)
-    //     .moveTo(200, 620).lineTo(200, 560)
-    //     .moveTo(210, 620).lineTo(210, 580)
-    //     .moveTo(220, 620).lineTo(220, 555)
-    //     .moveTo(230, 620).lineTo(230, 570)
-    //     .moveTo(240, 620).lineTo(240, 560)
-    //     .rect(250, 500, 150, 200)
-    //     .moveTo(420, 700).lineTo(420, 600)
-    //     .moveTo(440, 700).lineTo(440, 650)
-    //     .moveTo(460, 700).lineTo(460, 550)
-    //     .moveTo(480, 700).lineTo(480, 530)
-    //     .moveTo(500, 700).lineTo(500, 570)
-    //     .rect(460, 400, 80, 40)
-
-    var map = ["........",
-               "........",
-               "...#....",
-               "########"];
-
-    // envi.regX = 50;
-    // envi.regY = 50;
-    // envi.x = 150;
-    // envi.y = 150;
-
-    stage.addChild(envi);
+    for (var i = 0; i < map.length; i++) {
+        for (var j = 0; j < map[i].length; j++) {
+            if (map[i].charAt(j) === "#") {
+                block.graphics
+                    .beginFill('#567b89')
+                    .rect(blockX * j, blockY * i, blockX, blockY);
+                stage.addChild(block);
+            }
+        }
+    }
     stage.update();
 
+    var ss = new createjs.SpriteSheet({
+        images: ["Monster.png"], //16 на 34 кадра
+        frames: {
+            width: 32,
+            height: 32, //высота и ширина кадра
+            count: 192,
+            regX: 8, //pivot точка
+            regY: 8
+        },
+        // animations: { //список анимаций
+        //     //названия придумаем сами
+        //     one: 42, //один кадр номер 42
+        //     small: [0, 33, "small"], //с 0 до 33 кадра,
+        //                              //а потом опять small
+        //     big: [0, 5, "big"],
+        //     boom: [6, 11] //последняя строка
+        // }
+    });
+    var monster = new createjs.Sprite(ss);
+    monster.x = 5;
+    monster.y = 330;
+    //monster.gotoAndPlay("big");
+    stage.addChild(monster);
 
+    stage.update();
 
 }
