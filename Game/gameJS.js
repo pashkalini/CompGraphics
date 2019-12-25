@@ -12,7 +12,7 @@ function init() {
     let CHAR_WIDTH = 20;
     let CHAR_HEIGHT = 23;
 
-    let map = ["................", // 16:9
+    let map =["................", // 16:9
         "................",
         "................",
         ".........##.....",
@@ -187,7 +187,7 @@ function init() {
             //monster.x -= monster.vx;
             monster.vx = -150;
             //monster.gotoAndPlay("big");
-            nextAnimation = "run";
+            nextAnimation = "run"
 
         }
 
