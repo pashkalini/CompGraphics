@@ -81,6 +81,7 @@ function init() {
 
     var tickTime = createjs.Ticker.getTime();
     var speed = 100;
+
     function tick() {
       var curTime = createjs.Ticker.getEventTime();
       var elapsedTime = (curTime - tickTime) / 1000;
