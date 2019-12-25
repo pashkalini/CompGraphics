@@ -5,7 +5,7 @@ function init() {
 
     //Stage - это контейнер для всех DisplayObject
     let stage = new createjs.Stage(canvas);
-    const G = 9.8 * 20;
+    const G = 9.8 * 40;
 //    var envi  = new createjs.Shape();
     let blockX = 45;
     let blockY = 45;
@@ -42,6 +42,7 @@ function init() {
 
                 blockCords.push([blockX * j, blockY * i, blockX * j + blockX,
                     blockY * i + blockY]);
+
             }
         }
     }
@@ -69,7 +70,7 @@ function init() {
     let monster = new createjs.Sprite(ss);
 
     monster.x = 5;// левый верхний угол
-    monster.y = 102;
+    monster.y = -99;
 
     monster.vx = 0;
     monster.vy = 0;
@@ -109,7 +110,7 @@ function init() {
             // вернуть y как он был до изменения
             //условие пересечения блока и монстра
 
-            if (!(x2 < x3 || x4 < x1) && !(y2 < y3 || y4 < y1)) {
+            if (!(x2 <= x3 || x4 <= x1) && !(y2 <= y3 || y4 <= y1)) {
                 let variants = [];
 
                 let left = x2 - x3;
@@ -159,6 +160,7 @@ function init() {
             monster.y += optimal_move[1];
             //monster.vx = 0;
             monster.vy = 0;
+            //monster.y = monster_old_y;
             if (optimal_move[2] === true)
                 onGround = optimal_move[2];
             else
@@ -182,14 +184,18 @@ function init() {
 
         if (keys[38] && onGround === true) { // вверх
             //monster.y -= monster.vy;
-            monster.vy = -150;
+            monster.vy = -250;
             onGround = false;
         }
 
         if (keys[39]) // вправо
             // monster.x += monster.vx;
-
             monster.vx = 150;
+
+        // console.log("vy", monster.vy);
+        // console.log("vx", monster.vx);
+        // console.log("y", monster.y);
+        // console.log("x", monster.x);
 
         if (keys[40]) // вниз
             monster.vx = 0;
