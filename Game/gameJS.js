@@ -50,7 +50,7 @@ function init() {
     stage.update();
 
     let ss = new createjs.SpriteSheet({
-        images: ["Monster.png"], //16 на 34 кадра
+        images: ["Monster_walk.png"], //16 на 34 кадра
         frames: {
             width: 32,
             height: 32, //высота и ширина кадра
@@ -187,6 +187,7 @@ function init() {
             //monster.x -= monster.vx;
             monster.vx = -150;
             //monster.gotoAndPlay("big");
+            nextAnimation = "run";
 
         }
 
@@ -194,6 +195,7 @@ function init() {
             //monster.y -= monster.vy;
             monster.vy = -250;
             onGround = false;
+
         }
 
         if (keys[39]) {// вправо
