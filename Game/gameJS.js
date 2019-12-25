@@ -12,7 +12,8 @@ function init() {
     let CHAR_WIDTH = 20;
     let CHAR_HEIGHT = 23;
 
-    let map = ["................", // 16:8
+    let map = ["................", // 16:9
+        "................",
         "................",
         ".........##.....",
         ".##............",
@@ -58,19 +59,15 @@ function init() {
             regY: 8
         },
         animations: { //список анимаций
-            //названия придумаем сами
-            one: 42, //один кадр номер 42
-            small: [0, 33, "small"], //с 0 до 33 кадра,
-                                     //а потом опять small
-            big: [0, 5, "big"],
-            boom: [6, 11] //последняя строка
+            idle: 0,
+            run: [0, 5, "run"],
         }
     });
 
     let monster = new createjs.Sprite(ss);
 
     monster.x = 5;// левый верхний угол
-    monster.y = -99;
+    monster.y = -45;
 
     monster.vx = 0;
     monster.vy = 0;
@@ -141,6 +138,15 @@ function init() {
 
     let onGround;
 
+    let currentAnimation = "";
+
+    function heroAnimation(hero) {
+        if (hero === currentAnimation)
+            return;
+        currentAnimation = hero;
+        monster.gotoAndPlay(hero);
+    }
+
     monster.on('tick', function () {
         let delta_t = 1 / createjs.Ticker.getMeasuredFPS();
 
@@ -175,11 +181,13 @@ function init() {
         // не нажали влево или вправо => vx = 0
         // нажали вверх => vy = -200
 
+        let nextAnimation = "idle";
 
         if (keys[37]) {// влево
             //monster.x -= monster.vx;
             monster.vx = -150;
             //monster.gotoAndPlay("big");
+
         }
 
         if (keys[38] && onGround === true) { // вверх
@@ -188,10 +196,11 @@ function init() {
             onGround = false;
         }
 
-        if (keys[39]) // вправо
+        if (keys[39]) {// вправо
             // monster.x += monster.vx;
             monster.vx = 150;
-
+            nextAnimation = "run";
+        }
         // console.log("vy", monster.vy);
         // console.log("vx", monster.vx);
         // console.log("y", monster.y);
@@ -202,6 +211,8 @@ function init() {
 
         if (!keys[37] && !keys[39])
             monster.vx = 0;
+
+        heroAnimation(nextAnimation);
     });
 
 
